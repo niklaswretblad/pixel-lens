@@ -1,0 +1,163 @@
+/*
+  All Pixel Lens classes are prefixed with "pl-" to avoid
+  colliding with styles on the inspected page.
+*/
+
+/* ---- Base overlay rules ---- */
+
+.pl-highlight,
+.pl-hover-outline,
+.pl-margin-box,
+.pl-padding-box,
+.pl-measurement-line,
+.pl-measurement-label,
+.pl-tooltip,
+.pl-selected-highlight,
+.pl-dim-label,
+.pl-gap-box,
+.pl-gap-label {
+  position: fixed;
+  pointer-events: none;
+  z-index: 2147483647;
+  transition: none;
+}
+
+/* ---- Blue content box highlight (full, used in IDLE hover) ---- */
+
+.pl-highlight {
+  border: 1.5px solid #0d99ff;
+  background: rgba(13, 153, 255, 0.08);
+}
+
+/* ---- Blue outline only (no fill, used in SELECTED hover) ---- */
+
+.pl-hover-outline {
+  border: 1.5px dashed #0d99ff;
+  background: transparent;
+}
+
+/* ---- Selected element highlight (red) ---- */
+
+.pl-selected-highlight {
+  border: 2px solid #f24822;
+  background: rgba(242, 72, 34, 0.06);
+}
+
+/* ---- Padding (green) ---- */
+
+.pl-padding-box {
+  background: rgba(72, 199, 142, 0.3);
+}
+
+/* ---- Margin (orange) ---- */
+
+.pl-margin-box {
+  background: rgba(255, 165, 0, 0.25);
+}
+
+/* ---- Padding / Margin dimension labels ---- */
+
+.pl-dim-label {
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 1px 3px;
+  border-radius: 2px;
+  white-space: nowrap;
+  color: #fff;
+}
+
+.pl-dim-label--padding {
+  background: rgba(34, 153, 102, 0.85);
+}
+
+.pl-dim-label--margin {
+  background: rgba(200, 120, 0, 0.85);
+}
+
+/* ---- Gap visualization (purple hatched) ---- */
+
+.pl-gap-box {
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(179, 136, 255, 0.25),
+    rgba(179, 136, 255, 0.25) 2px,
+    rgba(179, 136, 255, 0.08) 2px,
+    rgba(179, 136, 255, 0.08) 6px
+  );
+  border: 1px solid rgba(179, 136, 255, 0.5);
+}
+
+.pl-gap-label {
+  background: rgba(121, 87, 213, 0.9);
+  color: #fff;
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+/* ---- Measurement lines (red dashed) ---- */
+
+.pl-measurement-line {
+  border: none;
+  background: transparent;
+}
+
+.pl-measurement-line--horizontal {
+  height: 1px;
+  border-top: 1px dashed #f24822;
+}
+
+.pl-measurement-line--vertical {
+  width: 1px;
+  border-left: 1px dashed #f24822;
+}
+
+/* ---- Distance labels ---- */
+
+.pl-measurement-label {
+  background: #f24822;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 2px 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+/* ---- Element info tooltip ---- */
+
+.pl-tooltip {
+  background: #1e1e1e;
+  color: #fff;
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 6px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  max-width: 350px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pl-tooltip .pl-tag {
+  color: #7cc5ff;
+}
+
+.pl-tooltip .pl-size {
+  color: #a8e6a1;
+  margin-left: 6px;
+}
+
+.pl-tooltip .pl-classes {
+  color: #ffb86c;
+  margin-left: 6px;
+}
