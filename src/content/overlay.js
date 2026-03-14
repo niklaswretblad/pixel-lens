@@ -573,12 +573,44 @@
     }
   }
 
+  // ---- Toast ----
+
+  let toastTimeout = null;
+
+  function showToast(enabled) {
+    // Remove any existing toast
+    const existing = document.querySelector('.pl-toast');
+    if (existing) existing.remove();
+    if (toastTimeout) clearTimeout(toastTimeout);
+
+    const toast = document.createElement('div');
+    toast.className = 'pl-toast';
+    const dotClass = enabled ? 'pl-toast-dot--on' : 'pl-toast-dot--off';
+    const label = enabled ? 'Pixel Lens on' : 'Pixel Lens off';
+    toast.innerHTML = `<span class="pl-toast-dot ${dotClass}"></span>${label}`;
+    document.documentElement.appendChild(toast);
+
+    // Trigger animation
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        toast.classList.add('pl-toast--visible');
+      });
+    });
+
+    // Fade out and remove
+    toastTimeout = setTimeout(() => {
+      toast.classList.remove('pl-toast--visible');
+      setTimeout(() => toast.remove(), 200);
+    }, 1200);
+  }
+
   // ---- Activate / Deactivate ----
 
   function activate() {
     if (active) return;
     active = true;
     initOverlays();
+    showToast(true);
     document.addEventListener('mousemove', onMouseMove, true);
     document.addEventListener('click', onClick, true);
     document.addEventListener('mousedown', blockEvent, true);
@@ -603,6 +635,7 @@
     window.removeEventListener('scroll', onScrollOrResize, true);
     window.removeEventListener('resize', onScrollOrResize);
     destroyOverlays();
+    showToast(false);
   }
 
   // ---- Message handling ----
