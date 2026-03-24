@@ -156,6 +156,7 @@
     const { rect, padding, margin, style } = getBoxModel(element);
 
     set.dynamic.innerHTML = '';
+    set.dynamic.style.display = '';
 
     // Highlight
     positionBox(set.highlight, rect);
@@ -428,6 +429,21 @@
     hoverOverlays.measurements.appendChild(frag);
   }
 
+  function getContentBoxRect(element) {
+    const rect = element.getBoundingClientRect();
+    const style = window.getComputedStyle(element);
+    const borderTop = parseFloat(style.borderTopWidth) || 0;
+    const borderRight = parseFloat(style.borderRightWidth) || 0;
+    const borderBottom = parseFloat(style.borderBottomWidth) || 0;
+    const borderLeft = parseFloat(style.borderLeftWidth) || 0;
+    return {
+      top: rect.top + borderTop,
+      left: rect.left + borderLeft,
+      bottom: rect.bottom - borderBottom,
+      right: rect.right - borderRight,
+    };
+  }
+
   function rectContains(outer, inner) {
     return outer.top <= inner.top && outer.left <= inner.left &&
            outer.bottom >= inner.bottom && outer.right >= inner.right;
@@ -442,9 +458,10 @@
       : hovered.getBoundingClientRect();
 
     if (useViewport || rectContains(hoveredRect, selectedRect)) {
-      renderContainmentMeasurements(hoveredRect, selectedRect);
+      const containerContentRect = useViewport ? hoveredRect : getContentBoxRect(hovered);
+      renderContainmentMeasurements(containerContentRect, selectedRect);
     } else if (rectContains(selectedRect, hoveredRect)) {
-      renderContainmentMeasurements(selectedRect, hoveredRect);
+      renderContainmentMeasurements(getContentBoxRect(selected), hoveredRect);
     } else {
       renderSiblingMeasurements(selectedRect, hoveredRect);
     }
